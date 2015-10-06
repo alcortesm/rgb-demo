@@ -10,4 +10,4 @@ about the Golang Standard Library and practicing common go idioms.
 
 ## Contact Information
 
-Email me at: "Alberto Cortes <alcortes@gmail.com>"
+Email me at: "Alberto Cortes <alcortesm@gmail.com>"
