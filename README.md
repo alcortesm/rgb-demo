@@ -1,7 +1,7 @@
 # rgb-demo
 
-A simple Go program to generate RGB (Red Green Blue) demo images as
-this one:
+A simple Go program to generate RGB (Red Green Blue) demo images
+similar to this one (from Wikipedia):
 
 ![RGB demo image](https://upload.wikimedia.org/wikipedia/commons/c/c2/AdditiveColor.svg)
 
