@@ -7,3 +7,7 @@ similar to this one (from Wikipedia):
 
 This is my first Go program; it is just a playground for learning
 about the Golang Standard Library and practicing common go idioms.
+
+## Contact Information
+
+Email me at: "Alberto Cortes <alcortes@gmail.com>"
