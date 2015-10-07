@@ -12,6 +12,7 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"math"
 	"os"
 )
 
@@ -49,7 +50,8 @@ func main() {
 // A zero value img is NOT safe, use newImg method as a ctor
 // Implements image.Image.
 type img struct {
-	side int
+	side   int
+	circle circle
 }
 
 // Calling this method "new" would be confusing because of the
@@ -62,7 +64,10 @@ func newImg(side int) (*img, error) {
 	if side < 1 {
 		return nil, errors.New("image side must be greater than 0")
 	}
-	return &img{side}, nil
+	i := new(img)
+	i.side = side
+	i.circle = circle{image.Point{200, 200}, 200}
+	return i, nil
 }
 
 // to implement image.Image
@@ -79,7 +84,30 @@ func (i *img) Bounds() image.Rectangle {
 }
 
 // to implement image.Image
-// TODO: add colored circles
+// TODO: substitute white circle with a red, green and blue circles
 func (i *img) At(x, y int) color.Color {
+	p := image.Point{x, y}
+	if i.circle.contains(p) {
+		return color.White
+	}
 	return color.Black
+}
+
+func modulus(p image.Point) float64 {
+	return math.Sqrt(float64(p.X*p.X + p.Y*p.Y))
+}
+
+func distance(a, b image.Point) float64 {
+	return modulus(a.Sub(b))
+}
+
+// A simple circle
+type circle struct {
+	center image.Point
+	radius int
+}
+
+func (c *circle) contains(p image.Point) bool {
+	d := distance(c.center, p)
+	return d <= float64(c.radius)
 }
