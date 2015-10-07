@@ -50,8 +50,8 @@ func main() {
 // A zero value img is NOT safe, use newImg method as a ctor
 // Implements image.Image.
 type img struct {
-	side   int
-	circle circle
+	side             int
+	red, green, blue circle
 }
 
 // Calling this method "new" would be confusing because of the
@@ -66,7 +66,13 @@ func newImg(side int) (*img, error) {
 	}
 	i := new(img)
 	i.side = side
-	i.circle = circle{image.Point{200, 200}, 200}
+	r := side / 3
+	// red at top middle
+	i.red = circle{image.Point{side / 2, side / 3}, r}
+	// green at bottom left
+	i.green = circle{image.Point{side / 3, side * 2 / 3}, r}
+	// blue at bottom right
+	i.blue = circle{image.Point{side * 2 / 3, side * 2 / 3}, r}
 	return i, nil
 }
 
@@ -84,13 +90,22 @@ func (i *img) Bounds() image.Rectangle {
 }
 
 // to implement image.Image
-// TODO: substitute white circle with a red, green and blue circles
 func (i *img) At(x, y int) color.Color {
 	p := image.Point{x, y}
-	if i.circle.contains(p) {
-		return color.White
+	// The color of each point will be a combination
+	// of the red, green and blue colors, and the alpha channel
+	var r, g, b, a uint8
+	a = math.MaxUint8 // opaque
+	if i.red.contains(p) {
+		r = math.MaxUint8
 	}
-	return color.Black
+	if i.green.contains(p) {
+		g = math.MaxUint8
+	}
+	if i.blue.contains(p) {
+		b = math.MaxUint8
+	}
+	return color.RGBA{r, g, b, a}
 }
 
 func modulus(p image.Point) float64 {
