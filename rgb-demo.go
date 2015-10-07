@@ -1,5 +1,9 @@
 // Copyright 2015 Alberto Cortés.
 
+// This program generates an RGB demo image: a square image with a
+// black background and three colored circles (red, green and blue)
+// interseting in a certain pattern. The resulting image is stored in
+// a file called "rgb.png".
 package main
 
 import (
